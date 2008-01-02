@@ -20,6 +20,7 @@ BuildRequires:  autoconf2.5
 BuildRequires:  libshout-devel
 BuildRequires:  libsamplerate-devel
 BuildRequires:  pkgconfig
+BuildRoot:      %{_tmppath}/%{name}-%{version}
 
 %description
 Mserv is a jukebox-style music server designed to play mp3, ogg, etc. files
