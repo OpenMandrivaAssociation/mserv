@@ -3,6 +3,7 @@
 %define release %mkrel 9
 %define major   0
 %define libname %mklibname %{name} %{major}
+%define develname %mklibname -d %{name}
 
 Name:           %{name}
 Version:        %{version}
@@ -12,13 +13,17 @@ Group:          System/Servers
 License:        GPL
 URL:            http://www.mserv.org
 Source:         http://prdownloads.sourceforge.net/mserv/%{name}-%{version}.tar.bz2
+Patch0:		mserv-0.41-disable-ltdl.patch
 Requires:       mpg123
 Requires:       vorbis-tools
 Requires:       %{libname} = %{version}
 BuildRequires:  automake
-BuildRequires:  autoconf2.5
+BuildRequires:  autoconf
+BuildRequires:	libltdl-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libsamplerate-devel
+BuildRequires:	libogg-devel
+BuildRequires:	libvorbis-devel
 BuildRequires:  pkgconfig
 BuildRoot:      %{_tmppath}/%{name}-%{version}
 
@@ -50,25 +55,25 @@ Provides:   %{name} = %{version}-%{release}
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n %{libname}-devel
+%package -n %{develname}
 Summary:    Headers for developing programs that will use %{name}
 Group:      Development/Other
 Requires:   %{libname} = %{version}
 Provides:   lib%{name}-devel = %{version}-%{release}
 Provides:   %{name}-devel = %{version}-%{release}
+Obsoletes:  %{_lib}bmserv0-devel
 
-%description -n %{libname}-devel
+%description -n %{develname}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
-aclocal
-automake
-autoconf
-%configure --disable-module-ossaudio --datadir=%{_datadir}/%{name}
+autoreconf -fi
+%configure2_5x --disable-module-ossaudio --datadir=%{_datadir}/%{name} --disable-static
 %make
 
 %install
@@ -92,18 +97,15 @@ rm -rf %{buildroot}
 %{_libdir}/%{name}
 %{_mandir}/*/*
 %{_datadir}/%{name}
-%exclude %{_libdir}/%{name}/*.a
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}
+%{_libdir}/*.so.%{major}.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_includedir}/*
 %{_libdir}/*.la
-%{_libdir}/*.a
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*
-%{_libdir}/%{name}/*.a
-
