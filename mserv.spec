@@ -1,6 +1,6 @@
 %define name    mserv
 %define version 0.41
-%define release %mkrel 8
+%define release %mkrel 9
 %define major   0
 %define libname %mklibname %{name} %{major}
 
@@ -15,7 +15,7 @@ Source:         http://prdownloads.sourceforge.net/mserv/%{name}-%{version}.tar.
 Requires:       mpg123
 Requires:       vorbis-tools
 Requires:       %{libname} = %{version}
-BuildRequires:  automake1.7
+BuildRequires:  automake
 BuildRequires:  autoconf2.5
 BuildRequires:  libshout-devel
 BuildRequires:  libsamplerate-devel
@@ -65,8 +65,8 @@ applications which will use %{name}.
 %setup -q
 
 %build
-aclocal-1.7
-automake-1.7
+aclocal
+automake
 autoconf
 %configure --disable-module-ossaudio --datadir=%{_datadir}/%{name}
 %make
