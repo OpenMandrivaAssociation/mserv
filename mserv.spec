@@ -1,6 +1,6 @@
 %define name    mserv
 %define version 0.41
-%define release %mkrel 9
+%define release %mkrel 10
 %define major   0
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
@@ -61,7 +61,7 @@ Group:      Development/Other
 Requires:   %{libname} = %{version}
 Provides:   lib%{name}-devel = %{version}-%{release}
 Provides:   %{name}-devel = %{version}-%{release}
-Obsoletes:  %{_lib}bmserv0-devel
+Obsoletes:  %{_lib}mserv0-devel
 
 %description -n %{develname}
 This package contains the headers that programmers will need to develop
