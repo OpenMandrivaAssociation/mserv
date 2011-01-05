@@ -1,6 +1,6 @@
 %define name    mserv
 %define version 0.41
-%define release %mkrel 10
+%define release %mkrel 11
 %define major   0
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
@@ -17,14 +17,11 @@ Patch0:		mserv-0.41-disable-ltdl.patch
 Requires:       mpg123
 Requires:       vorbis-tools
 Requires:       %{libname} = %{version}
-BuildRequires:  automake
-BuildRequires:  autoconf
 BuildRequires:	libltdl-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libsamplerate-devel
 BuildRequires:	libogg-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:  pkgconfig
 BuildRoot:      %{_tmppath}/%{name}-%{version}
 
 %description
@@ -49,7 +46,7 @@ interface (written by David Brownlee)!
 %package -n %{libname}
 Summary:    Main library for %{name}
 Group:      System/Libraries
-Provides:   %{name} = %{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 
 %description -n %{libname}
 This package contains the library needed to run programs dynamically
