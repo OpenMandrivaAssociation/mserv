@@ -1,18 +1,15 @@
-%define name    mserv
-%define version 0.41
-%define release %mkrel 11
 %define major   0
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
 
-Name:           %{name}
-Version:        %{version}
-Release:        %{release}
+Name:           mserv
+Version:        0.41
+Release:        12
 Summary:        Jukebox-style music server for unix-like systems
 Group:          System/Servers
 License:        GPL
 URL:            http://www.mserv.org
-Source:         http://prdownloads.sourceforge.net/mserv/%{name}-%{version}.tar.bz2
+Source0:        http://prdownloads.sourceforge.net/mserv/%{name}-%{version}.tar.bz2
 Patch0:		mserv-0.41-disable-ltdl.patch
 Requires:       mpg123
 Requires:       vorbis-tools
@@ -22,7 +19,6 @@ BuildRequires:  libshout-devel
 BuildRequires:  libsamplerate-devel
 BuildRequires:	libogg-devel
 BuildRequires:	libvorbis-devel
-BuildRoot:      %{_tmppath}/%{name}-%{version}
 
 %description
 Mserv is a jukebox-style music server designed to play mp3, ogg, etc. files
@@ -56,8 +52,8 @@ linked with %{name}.
 Summary:    Headers for developing programs that will use %{name}
 Group:      Development/Other
 Requires:   %{libname} = %{version}
-Provides:   lib%{name}-devel = %{version}-%{release}
-Provides:   %{name}-devel = %{version}-%{release}
+Provides:   lib%{name}-devel = %{EVRD}
+Provides:   %{name}-devel = %{EVRD}
 Obsoletes:  %{_lib}mserv0-devel
 
 %description -n %{develname}
@@ -74,21 +70,9 @@ autoreconf -fi
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
 
-%clean 
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files
-%defattr(-,root,root)
 %doc AUTHORS COPYING ChangeLog INSTALL LICENSE README
 %{_bindir}/*
 %{_libdir}/%{name}
@@ -103,6 +87,58 @@ rm -rf %{buildroot}
 %files -n %{develname}
 %defattr(-,root,root)
 %{_includedir}/*
-%{_libdir}/*.la
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*
+
+
+%changelog
+* Wed Jan 05 2011 Funda Wang <fwang@mandriva.org> 0.41-11mdv2011.0
++ Revision: 628730
+- should be requires rather than provides
+
+* Mon Jan 03 2011 Funda Wang <fwang@mandriva.org> 0.41-10mdv2011.0
++ Revision: 628026
+- fix obsolets
+
+* Mon Jan 03 2011 Funda Wang <fwang@mandriva.org> 0.41-9mdv2011.0
++ Revision: 627947
+- use system libltdl
+- new devel package policy
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - don't force the usage of automake1.7
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+* Tue Jul 22 2008 Thierry Vignaud <tv@mandriva.org> 0.41-7mdv2009.0
++ Revision: 240266
+- rebuild
+- rebuild
+- kill re-definition of %%buildroot on Pixel's request
+- import mserv
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+
+* Tue Aug 01 2006 Guillaume Rousse <guillomovitch@mandriva.org> 0.41-5mdv2007.0
+- %%mkrel
+- lower interdependencies
+- move %%{_libdir}/%%{name}/*.a in devel package
+
+* Thu Jul 28 2005 Guillaume Rousse <guillomovitch@mandriva.org> 0.41-4mdk 
+- spec cleanup
+
+* Fri Jul 23 2004 Guillaume Rousse <guillomovitch@mandrake.org> 0.41-3mdk 
+- fixed URL
+- rpmbuildupdate aware
+
+* Thu Apr 22 2004 Guillaume Rousse <guillomovitch@mandrake.org> 0.41-2mdk
+- requires and buildrequires 
+
+* Thu Apr 22 2004 Guillaume Rousse <guillomovitch@mandrake.org> 0.41-1mdk
+- first mdk package
