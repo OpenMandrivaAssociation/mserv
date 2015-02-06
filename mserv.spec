@@ -4,7 +4,7 @@
 
 Name:           mserv
 Version:        0.41
-Release:        12
+Release:        13
 Summary:        Jukebox-style music server for unix-like systems
 Group:          System/Servers
 License:        GPL
