@@ -8,7 +8,7 @@ Release:        13
 Summary:        Jukebox-style music server for unix-like systems
 Group:          System/Servers
 License:        GPL
-URL:            http://www.mserv.org
+URL:            https://www.mserv.org
 Source0:        http://prdownloads.sourceforge.net/mserv/%{name}-%{version}.tar.bz2
 Patch0:		mserv-0.41-disable-ltdl.patch
 Requires:       mpg123
