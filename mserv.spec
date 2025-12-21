@@ -14,6 +14,11 @@ Patch0:		mserv-0.41-disable-ltdl.patch
 Requires:       mpg123
 Requires:       vorbis-tools
 Requires:       %{libname} = %{version}
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	libltdl-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libsamplerate-devel
